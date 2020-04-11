@@ -6,12 +6,12 @@
         android:enabled="true"
         android:icon="@drawable/ic_home_black_24dp"
         app:showAsAction="ifRoom"/>
-    <item android:id="@+id/search"
+    <item android:id="@+id/favorite"
         android:title=""
         android:enabled="true"
         android:icon="@drawable/ic_favorite_black_24dp"
         app:showAsAction="ifRoom"/>
-    <item android:id="@+id/add"
+    <item android:id="@+id/user"
         android:title=""
         android:enabled="true"
         android:icon="@drawable/ic_account_circle_black_24dp"
