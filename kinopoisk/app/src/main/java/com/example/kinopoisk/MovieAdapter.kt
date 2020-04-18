@@ -1,28 +1,50 @@
 package com.example.kinopoisk
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_row.view.*
 
-class MovieAdapter(private val users: List<User>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter(
+    var list: List<Movie>? = null,
+    val itemClickListener : RecyclerViewItemClick? = null
+) : RecyclerView.Adapter<MovieAdapter.PostViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): PostViewHolder {
+        val view = LayoutInflater.from(p0.context).inflate(R.layout.movie_row, p0, false)
+        return PostViewHolder(view)
     }
 
-    override fun getItemCount() = users.size
+    override fun getItemCount(): Int = list?.size ?: 0
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user = users[position]
-        holder.movieName.text = user.name
+    override fun onBindViewHolder(p0: PostViewHolder, p1: Int) {
+        p0.bind(list?.get(p1))
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val movieName: TextView  = itemView.movieName
+    fun clearAll() {
+        (list as? ArrayList<Movie>)?.clear()
+        notifyDataSetChanged()
+    }
+
+    inner class PostViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+        fun bind(movie: Movie?) {
+            val movieName = view.findViewById<TextView>(R.id.movieName)
+
+            movieName.text = movie?.title
+
+            view.setOnClickListener {
+                itemClickListener?.itemClick(adapterPosition, movie!!)
+            }
+        }
+    }
+
+    interface RecyclerViewItemClick {
+        fun itemClick(position: Int, item: Movie)
     }
 
 }

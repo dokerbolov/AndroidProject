@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("/users")
-    fun fetchAllUsers(): Call<List<User>>
+    @GET("movies")
+    fun getMovieList(): Call<List<Movie>>
 }

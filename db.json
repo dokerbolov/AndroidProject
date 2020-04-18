@@ -2,11 +2,18 @@
   "movies": [
     {
       "id": 1,
-      "title": "Avangers"
+      "title": "Avangers",
+      "url": "https://images-na.ssl-images-amazon.com/images/I/81o%2BzjZ4KHL._SY679_.jpg"
     },
     {
       "id": 2,
-      "title": "Pirate of Caribian"
+      "title": "Pirate of the Caribbean",
+      "url": "https://upload.wikimedia.org/wikipedia/en/c/c6/On_Stranger_Tides_Poster.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Titanic",
+      "url": "https://upload.wikimedia.org/wikipedia/en/c/c6/On_Stranger_Tides_Poster.jpg"
     }
   ]
 }

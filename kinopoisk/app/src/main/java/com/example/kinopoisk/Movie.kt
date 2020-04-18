@@ -1,4 +1,7 @@
 package com.example.kinopoisk
 
-class Movie {
-}
+class Movie(
+    val title: String,
+    val description: String,
+    val url: String
+)

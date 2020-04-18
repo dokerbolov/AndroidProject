@@ -6,6 +6,7 @@ import android.util.Log.d
 import android.widget.LinearLayout
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -14,8 +15,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.FieldPosition
+import android.content.Intent
+import android.util.Log
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(), MovieAdapter.RecyclerViewItemClick {
 
     lateinit var homeFragment: HomeFragment
     lateinit var favoriteFragment: FavoriteFragment
@@ -23,32 +28,24 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var bottomNavigation: BottomNavigationView
+    lateinit var recyclerView: RecyclerView
+
+    private var movieAdapter: MovieAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottomNavigation = findViewById(R.id.bottom_navigation)
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
         swipeRefreshLayout.setOnRefreshListener {
-
+            movieAdapter?.clearAll()
+            getMovies()
         }
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val api = retrofit.create(ApiService::class.java)
-        api.fetchAllUsers().enqueue(object : Callback<List<User>>{
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                showData(response.body()!!)
-            }
-
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                d("incorrect","onFailure")
-            }
-
-        })
+        movieAdapter = MovieAdapter(itemClickListener = this)
+        recyclerView.adapter = movieAdapter
 
         homeFragment = HomeFragment()
         supportFragmentManager
@@ -86,14 +83,31 @@ class MainActivity : AppCompatActivity() {
         }
             true
         }
+        getMovies()
 
     }
 
-    private fun showData(users: List<User>){
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = MovieAdapter(users)
-        }
+    override fun itemClick(position: Int, item: Movie){
     }
+
+    private fun getMovies(){
+        swipeRefreshLayout.isRefreshing = true
+        RetrofitService.getPostApi().getMovieList().enqueue(object : Callback<List<Movie>> {
+            override fun onFailure(call: Call<List<Movie>>, t: Throwable){
+                swipeRefreshLayout.isRefreshing = false
+            }
+
+            override fun onResponse(call: Call<List<Movie>>, response: Response<List<Movie>>) {
+                Log.d("My_movie_list", response.body().toString())
+                if(response.isSuccessful){
+                    val list = response.body()
+                    movieAdapter?.list = list
+                    movieAdapter?.notifyDataSetChanged()
+                }
+                swipeRefreshLayout.isRefreshing = false
+            }
+        })
+    }
+
 
 }
