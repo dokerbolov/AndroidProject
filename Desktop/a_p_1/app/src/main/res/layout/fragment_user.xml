@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="20"
+    android:orientation="vertical"
+    tools:context=".UserFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="18"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:weightSum="30">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:text="Профиль"
+            android:gravity="center"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Мой Кинопоиск"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Мои Фильмы"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Мои покупки"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Мои звёзды"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Загрузки"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Приложение"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="История"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Настройки"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Сообщить о проблеме"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="15sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"/>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:textColor="#ffffff"
+            android:background="#FFA500"
+            android:text="Войти"
+            android:layout_height="0dp"
+            android:layout_margin="10sp"
+            android:layout_weight="2.5"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
