@@ -20,39 +20,18 @@ import android.content.Intent
 import android.util.Log
 
 
-class MainActivity : AppCompatActivity(), MovieAdapter.RecyclerViewItemClick {
+class MainActivity : AppCompatActivity() {
 
     lateinit var homeFragment: HomeFragment
     lateinit var favoriteFragment: FavoriteFragment
     lateinit var userFragment: UserFragment
 
-    lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var bottomNavigation: BottomNavigationView
-    lateinit var recyclerView: RecyclerView
-
-    private var movieAdapter: MovieAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottomNavigation = findViewById(R.id.bottom_navigation)
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
-        swipeRefreshLayout.setOnRefreshListener {
-            movieAdapter?.clearAll()
-            getMovies()
-        }
-
-        movieAdapter = MovieAdapter(itemClickListener = this)
-        recyclerView.adapter = movieAdapter
-
-        homeFragment = HomeFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame_layout, homeFragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .commit()
 
         bottomNavigation.setOnNavigationItemSelectedListener {
             item -> when(item.itemId){
@@ -83,31 +62,7 @@ class MainActivity : AppCompatActivity(), MovieAdapter.RecyclerViewItemClick {
         }
             true
         }
-        getMovies()
 
     }
-
-    override fun itemClick(position: Int, item: Movie){
-    }
-
-    private fun getMovies(){
-        swipeRefreshLayout.isRefreshing = true
-        RetrofitService.getPostApi().getMovieList().enqueue(object : Callback<List<Movie>> {
-            override fun onFailure(call: Call<List<Movie>>, t: Throwable){
-                swipeRefreshLayout.isRefreshing = false
-            }
-
-            override fun onResponse(call: Call<List<Movie>>, response: Response<List<Movie>>) {
-                Log.d("My_movie_list", response.body().toString())
-                if(response.isSuccessful){
-                    val list = response.body()
-                    movieAdapter?.list = list
-                    movieAdapter?.notifyDataSetChanged()
-                }
-                swipeRefreshLayout.isRefreshing = false
-            }
-        })
-    }
-
 
 }
