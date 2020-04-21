@@ -1,15 +1,14 @@
-package com.example.kinopoisk
+package com.example.kinopoisk.Adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kinopoisk.model.Movie
+import com.example.kinopoisk.R
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.movie_row.view.*
-import kotlin.coroutines.coroutineContext
 
 class MovieAdapter(
     var list: List<Movie>? = null,
@@ -38,10 +37,10 @@ class MovieAdapter(
             val movieName = view.findViewById<TextView>(R.id.movieName)
             val moviePic = view.findViewById<ImageView>(R.id.moviePic)
 
-            movieId
-            movieName.text = movie?.title
+            movieId.text = movie?.id.toString()
+            movieName.text = movie?.originalTitle
             Picasso.with(view.context)
-                .load(movie?.url)
+                .load(movie?.poster_path)
                 .into(moviePic)
             view.setOnClickListener {
                 itemClickListener?.itemClick(adapterPosition, movie!!)

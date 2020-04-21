@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:weightSum="20"
     android:orientation="vertical"
-    tools:context=".UserFragment"
+    tools:context=".Fragments.UserFragment"
     android:id="@+id/fragment_user">
 
     <LinearLayout

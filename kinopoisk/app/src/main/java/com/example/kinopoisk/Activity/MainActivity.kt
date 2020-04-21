@@ -1,22 +1,13 @@
-package com.example.kinopoisk
+package com.example.kinopoisk.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log.d
-import android.widget.LinearLayout
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.kinopoisk.Fragments.FavoriteFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.text.FieldPosition
-import android.content.Intent
-import android.util.Log
+import com.example.kinopoisk.Fragments.HomeFragment
+import com.example.kinopoisk.Fragments.UserFragment
+import com.example.kinopoisk.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -58,7 +49,8 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                 }
                 R.id.favorite -> {
-                    favoriteFragment = FavoriteFragment()
+                    favoriteFragment =
+                        FavoriteFragment()
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.frame_layout, favoriteFragment)

@@ -1,4 +1,4 @@
-package com.example.kinopoisk
+package com.example.kinopoisk.Fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,25 +8,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bumptech.glide.manager.SupportRequestManagerFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.kinopoisk.*
+import com.example.kinopoisk.Activity.MovieDetailActivity
+import com.example.kinopoisk.Adapter.MovieAdapter
+import com.example.kinopoisk.api.ApiService
+import com.example.kinopoisk.api.RetrofitService
+import com.example.kinopoisk.model.Movie
+import com.example.kinopoisk.model.MovieResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFragment : Fragment(), MovieAdapter.RecyclerViewItemClick {
+class HomeFragment : Fragment(),
+    MovieAdapter.RecyclerViewItemClick {
 
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var recyclerView: RecyclerView
-    lateinit var movieDetailFragment: MovieDetailFragment
 
     private var movieAdapter: MovieAdapter? = null
     private var rootView: View? = null
+    private var movies: ArrayList<Movie>? = null
+    private lateinit var movie: Movie
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,28 +61,28 @@ class HomeFragment : Fragment(), MovieAdapter.RecyclerViewItemClick {
     }
 
     override fun itemClick(position: Int, item: Movie){
-        movieDetailFragment = MovieDetailFragment()
-        val fragmentManager = activity!!.supportFragmentManager
-        val fragmentTransaction = fragmentManager
-            .beginTransaction()
-            .replace(R.id.frame_layout, movieDetailFragment)
-            .commit()
+        val intent = Intent(context, MovieDetailActivity::class.java)
+        startActivity(intent)
     }
 
     private fun getMovies(){
         swipeRefreshLayout.isRefreshing = true
-        RetrofitService.getPostApi().getMovieList().enqueue(object : Callback<List<Movie>> {
-            override fun onFailure(call: Call<List<Movie>>, t: Throwable){
-                swipeRefreshLayout.isRefreshing = false
-            }
-
-            override fun onResponse(call: Call<List<Movie>>, response: Response<List<Movie>>) {
-                Log.d("My_movie_list", response.body().toString())
-                if(response.isSuccessful){
-                    val list = response.body()
-                    movieAdapter?.list = list
+        val api: ApiService? = RetrofitService.getPostApi()?.create(ApiService::class.java)
+        api?.getPopularMoviesList(BuildConfig.THE_MOVIE_DB_API_TOKEN, 1)?.enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                if (response.isSuccessful){
+                    val list = response.body()?.results
+                    val list2 = list!!.subList(1, list.lastIndex)
+                    if( list != null){
+                        movie = list.first()
+                    }
+                    movieAdapter?.list = list2
                     movieAdapter?.notifyDataSetChanged()
                 }
+            }
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                Log.e(HomeFragment::class.java.simpleName, t.toString())
+                Toast.makeText(context,"Ne gruzit",Toast.LENGTH_SHORT).show()
                 swipeRefreshLayout.isRefreshing = false
             }
         })

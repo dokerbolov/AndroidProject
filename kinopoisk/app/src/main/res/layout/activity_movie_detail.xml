@@ -13,20 +13,20 @@
         android:background="#ffffff"
         >
         <TextView
-            android:id="@+id/movieId"
+            android:id="@+id/detailMovieId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="id"
             />
         <TextView
-            android:id="@+id/movieName"
+            android:id="@+id/detailMovieName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="SomeText"
             android:padding="10sp"/>
 
         <ImageView
-            android:id="@+id/moviePic"
+            android:id="@+id/detailMoviePic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_insert_emoticon_black_24dp"
